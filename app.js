@@ -9,32 +9,19 @@ var loginSchema = new Schema({
 });
 
 const info=mongoose.model("info",loginSchema);
-
-
-
-
 const express= require("express");
 const bodyParser=require("body-parser");
 const app=express();
 app.set('view engine','ejs');
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static("public"));
-var myName="nimra"
+var myName=""
 app.get("/", function(req,res){
     res.render("main");
     //res.render("my",{totm:name});
 
 })
 app.post("/",function(req,res){
-     //console.log(req.body.buton.value);
-    
-    // if(req.body.login=="login"){
-    //     res.render("my");
-    // }
-    // const data=new info({
-    //     name:userName,
-    //     pass:userPass
-    // });
     var item=req.body.choose
     if(item=='1'){
         res.redirect("/signup")
@@ -50,14 +37,14 @@ app.get("/login",function(req,res){
     res.render("my");
 })
 app.post("/login",function(req,res){
-    var it=req.body.userName;
-    var em=req.body.userPass;
-   
+    var Uname=req.body.userName;
+    var Upass=req.body.userPass;
+    myName=Uname
     var item=req.body.choose
     if(item=='1'){
         res.redirect("login/welcome")
     }  
-    myName=it
+    //************************************here i am trying to do login validation which results in error*************
     // info.find(function(err,infos){
     //     if(err){
     //         console.log("error");
@@ -65,8 +52,8 @@ app.post("/login",function(req,res){
     //     else{
              
     // infos.forEach(function(info){
-    //      if(info.name==it){
-    //         if(info.pass==em)
+    //      if(info.name==Uname){
+    //         if(info.pass==Upass)
     //         {
     //             res.redirect("login/welcome")
     //         }
@@ -89,19 +76,6 @@ app.post("/login",function(req,res){
 
 app.get("/login/welcome",function(req,res){
     res.render("welcome",{name:myName})
-    // info.updateOne({name:"nimra"},{pass:"janymn"},function(err){
-    //     if(err){
-    //         console.log(err);
-    //     }
-    //     else{
-    //         console.log("sucessfully done")
-    //     }
-    // })
-
-
-   
-
-
 })
 app.post("/login/welcome",function(req,res){
     var vaa=req.body.choose
@@ -129,16 +103,20 @@ app.get("/login/welcome/update",function(req,res){
     res.render("update",{name:myName});
 })
 app.post("/login/welcome/update",function(req,res){
-    var vaa=req.body.choose
-    if(vaa=='0'){
-        var add=prompt('Please enter your name');
-    }
-    if(vaa=='1'){
-        var add=alert("enter pass");
-    }
-    if(vaa=='2'){
-        res.redirect("/login/welcome");
-    }
+    var it=req.body.userName;
+    var em=req.body.userPass;
+      info.updateOne({name:myName},{name:it,pass:em},function(err){
+         if(err){
+             console.log(err);
+         }
+         else{
+             console.log("sucessfully done")
+         }
+     })
+     var vaa=req.body.choose
+     if(vaa=='1'){
+         res.redirect("/login/welcome")
+     }
 })
 app.get("/signup",function(req,res){
     res.render("signup");

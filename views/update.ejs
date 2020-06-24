@@ -1,11 +1,11 @@
 <%- include("header")-%>
 <h1>What you wanna update <%=name%></h1>
 <form action="/login/welcome/update" method="post">
-    <button  class="btn btn-lg btn-primary mybtn " type="submit" name="choose" value="0" >Name</button>
-      
-   <button  class="btn btn-lg btn-primary mybtn" type="submit" name="choose" value="1" >password</button>
-
-   <button  class="btn btn-lg btn-primary mybtn" type="submit" name="choose" value="2" >back</button>
+    <input type="text"  class="form-control" placeholder="Enter Name" name="userName" required autofocus autocomplete="off">
+ 
+    <input type="password"  class="form-control" placeholder="Password" name="userPass" required autocomplete="off">
+    
+    <button class="btn btn-lg btn-primary btn-block" type="submit" name="choose" value="1">Update</button>
    <p class="mt-5 mb-3 text-muted">&copy; nimrayyy</p
 
 <%- include("footer") -%>
