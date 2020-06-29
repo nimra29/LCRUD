@@ -40,35 +40,21 @@ app.post("/login",function(req,res){
     var Uname=req.body.userName;
     var Upass=req.body.userPass;
     myName=Uname
-    var item=req.body.choose
-    if(item=='1'){
-        res.redirect("login/welcome")
-    }  
-    //************************************here i am trying to do login validation which results in error*************
-    // info.find(function(err,infos){
-    //     if(err){
-    //         console.log("error");
-    //     }
-    //     else{
-             
-    // infos.forEach(function(info){
-    //      if(info.name==Uname){
-    //         if(info.pass==Upass)
-    //         {
-    //             res.redirect("login/welcome")
-    //         }
-    //         else{
-    //             res.redirect("/")
-    //         }
-            
-    //     }
-    //     else{res.redirect("/")}
-    // })
-
-    //     }
-
-
-    // })
+    info.findOne({name:Uname})
+    .then(info=>{
+        if(!info) {
+            res.redirect("/login")
+        }
+        else{
+            if(info.pass==Upass){
+                res.redirect("login/welcome")
+            }
+            else{
+                res.redirect("/login")
+            }
+        }
+    })
+   
 
      
 })  
